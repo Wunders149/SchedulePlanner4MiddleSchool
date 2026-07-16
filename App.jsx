@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Plus, X, Pencil, Trash2, Users, Loader2, BookOpen, Printer, Download, Upload, Save } from "lucide-react";
+import { Plus, X, Pencil, Trash2, Users, Loader2, BookOpen, Printer, Download, Upload, Save, ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const FULL_DAYS = {
@@ -19,7 +19,60 @@ const PERIODS = [
   { id: "p3", label: "Period 3", time: "2:00 – 4:00", type: "class" },
 ];
 
-const cellKey = (day, grade, periodId) => `${day}-${grade}-${periodId}`;
+// ---- Week helpers: every schedule slot belongs to a specific Mon–Sat week,
+// identified by that week's Monday date (ISO "YYYY-MM-DD"). ----
+function toISODate(d) {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+function isoToDate(iso) {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+function getMondayISO(date) {
+  const d = new Date(date);
+  const day = d.getDay(); // 0 = Sun ... 6 = Sat
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  return toISODate(d);
+}
+function addDaysISO(iso, n) {
+  const d = isoToDate(iso);
+  d.setDate(d.getDate() + n);
+  return toISODate(d);
+}
+function shiftWeekISO(iso, deltaWeeks) {
+  return addDaysISO(iso, deltaWeeks * 7);
+}
+function dateForDayInWeek(weekStartISO, dayAbbrev) {
+  return isoToDate(addDaysISO(weekStartISO, DAYS.indexOf(dayAbbrev)));
+}
+function formatWeekRangeLabel(weekStartISO) {
+  const start = isoToDate(weekStartISO);
+  const end = isoToDate(addDaysISO(weekStartISO, 5));
+  const startStr = start.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  const endStr = end.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+  return `${startStr} – ${endStr}`;
+}
+
+const cellKey = (weekStart, day, grade, periodId) => `${weekStart}|${day}-${grade}-${periodId}`;
+// Matches the OLD key format (before weeks existed), so existing saved
+// schedules migrate forward instead of disappearing.
+const LEGACY_KEY_RE = /^(Mon|Tue|Wed|Thu|Fri|Sat)-(6|7|8|9)-(p1|b1|p2|lunch|p3)$/;
+function migrateLegacyKeys(raw, fallbackWeekStart) {
+  const next = {};
+  Object.entries(raw || {}).forEach(([key, value]) => {
+    if (LEGACY_KEY_RE.test(key)) {
+      next[`${fallbackWeekStart}|${key}`] = value;
+    } else {
+      next[key] = value;
+    }
+  });
+  return next;
+}
+
 const STORAGE_KEY = "schedule-entries-v1";
 const GH_TOKEN_KEY = "schedule-ledger-gh-token";
 
@@ -125,6 +178,7 @@ export default function ScheduleLedger() {
   const [entries, setEntries] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [currentWeekStart, setCurrentWeekStart] = useState(() => getMondayISO(new Date()));
   const [activeDay, setActiveDay] = useState("Mon");
   const [editing, setEditing] = useState(null); // {day, grade, periodId}
   const [draftTitle, setDraftTitle] = useState("");
@@ -138,42 +192,54 @@ export default function ScheduleLedger() {
   const [ghMessage, setGhMessage] = useState(null); // {type: 'ok'|'error', text}
   const [showTokenPrompt, setShowTokenPrompt] = useState(false);
   const [tokenInput, setTokenInput] = useState("");
+  const [hasUnsyncedChanges, setHasUnsyncedChanges] = useState(false);
   const printTimeout = useRef(null);
   const fileInputRef = useRef(null);
+  const lastSyncedSnapshot = useRef("{}");
+
+  const thisRealWeek = getMondayISO(new Date());
 
   useEffect(() => {
     (async () => {
+      // 1) Read whatever's cached in this browser.
+      let localRaw = {};
       try {
         const rawStr = window.localStorage.getItem(STORAGE_KEY);
-        if (rawStr) {
-          // We already have data saved in this browser — use it. This is
-          // never overwritten by the bundled JSON file, so nothing already
-          // saved is ever lost.
-          setEntries(normalizeEntries(JSON.parse(rawStr)));
-        } else {
-          // No local data yet (first visit, or a different browser/device):
-          // fall back to the JSON file bundled with the site, if it has
-          // anything in it.
-          try {
-            const res = await fetch(`${import.meta.env.BASE_URL}schedule-data.json`);
-            if (res.ok) {
-              const json = await res.json();
-              const normalized = normalizeEntries(json);
-              if (Object.keys(normalized).length > 0) {
-                setEntries(normalized);
-                window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
-              }
-            }
-          } catch (e) {
-            // No bundled file, or it failed to load — fine, just start empty.
-          }
-        }
+        if (rawStr) localRaw = JSON.parse(rawStr);
       } catch (e) {
-        // no existing data yet — that's fine
-      } finally {
-        setLoaded(true);
+        // no local cache yet — fine
       }
+
+      // 2) Try fetching the shared copy published to the site (this is what
+      // makes the schedule visible across devices — it reflects whatever was
+      // last sent with "Save to GitHub").
+      let remoteRaw = {};
+      try {
+        const res = await fetch(`${import.meta.env.BASE_URL}schedule-data.json`, { cache: "no-store" });
+        if (res.ok) remoteRaw = await res.json();
+      } catch (e) {
+        // offline, or nothing published yet — that's fine, local still works
+      }
+
+      const migratedLocal = normalizeEntries(migrateLegacyKeys(localRaw, thisRealWeek));
+      const migratedRemote = normalizeEntries(migrateLegacyKeys(remoteRaw, thisRealWeek));
+
+      // 3) Merge: local edits always win on conflicts (so nothing you've
+      // typed here ever silently vanishes), but any slot only the shared
+      // copy knows about (e.g. saved from another device) fills in too.
+      const merged = { ...migratedRemote, ...migratedLocal };
+
+      setEntries(merged);
+      lastSyncedSnapshot.current = JSON.stringify(migratedRemote);
+      setHasUnsyncedChanges(JSON.stringify(merged) !== lastSyncedSnapshot.current);
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+      } catch (e) {
+        // ignore — nothing else to do if storage is unavailable
+      }
+      setLoaded(true);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const persist = useCallback((next) => {
@@ -185,6 +251,7 @@ export default function ScheduleLedger() {
     } finally {
       setSaving(false);
     }
+    setHasUnsyncedChanges(JSON.stringify(next) !== lastSyncedSnapshot.current);
   }, []);
 
   // Downloads the current schedule as a JSON file. Upload this file to
@@ -230,6 +297,8 @@ export default function ScheduleLedger() {
     try {
       await saveScheduleToGitHub(token, entries);
       window.localStorage.setItem(GH_TOKEN_KEY, token);
+      lastSyncedSnapshot.current = JSON.stringify(entries);
+      setHasUnsyncedChanges(false);
       setGhMessage({ type: "ok", text: "Saved to GitHub — your site will redeploy shortly." });
     } catch (err) {
       setGhMessage({ type: "error", text: err.message || "Something went wrong saving to GitHub." });
@@ -289,9 +358,9 @@ export default function ScheduleLedger() {
   }, [printGrade]);
 
   const openEditor = (day, grade, periodId) => {
-    const key = cellKey(day, grade, periodId);
+    const key = cellKey(currentWeekStart, day, grade, periodId);
     const existing = entries[key];
-    setEditing({ day, grade, periodId });
+    setEditing({ weekStart: currentWeekStart, day, grade, periodId });
     setDraftTitle(existing?.title || "");
     setDraftDescriptionText((existing?.description || []).join("\n"));
     setDraftTeachers(existing?.teachers || []);
@@ -324,7 +393,7 @@ export default function ScheduleLedger() {
       setError("Give this class a title first.");
       return;
     }
-    const key = cellKey(editing.day, editing.grade, editing.periodId);
+    const key = cellKey(editing.weekStart, editing.day, editing.grade, editing.periodId);
     const next = {
       ...entries,
       [key]: {
@@ -339,7 +408,7 @@ export default function ScheduleLedger() {
   };
 
   const deleteEntry = () => {
-    const key = cellKey(editing.day, editing.grade, editing.periodId);
+    const key = cellKey(editing.weekStart, editing.day, editing.grade, editing.periodId);
     const next = { ...entries };
     delete next[key];
     setEntries(next);
@@ -427,10 +496,7 @@ export default function ScheduleLedger() {
             <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: 20, margin: 0 }}>
               Grade {printGrade} — Weekly Schedule
             </h1>
-            <span style={{ fontSize: 11, color: "#666" }}>
-              Week of{" "}
-              {new Date().toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}
-            </span>
+            <span style={{ fontSize: 11, color: "#666" }}>Week of {formatWeekRangeLabel(currentWeekStart)}</span>
           </div>
           <table
             className="print-table"
@@ -453,6 +519,12 @@ export default function ScheduleLedger() {
                     style={{ border: "1px solid #999", padding: "5px 6px", background: "#EFEBDD", textAlign: "left" }}
                   >
                     {FULL_DAYS[d]}
+                    <div style={{ fontWeight: 400, color: "#777", fontSize: 10.5 }}>
+                      {dateForDayInWeek(currentWeekStart, d).toLocaleDateString(undefined, {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </div>
                   </th>
                 ))}
               </tr>
@@ -484,7 +556,7 @@ export default function ScheduleLedger() {
                       <div style={{ color: "#666" }}>{period.time}</div>
                     </td>
                     {DAYS.map((day) => {
-                      const key = cellKey(day, printGrade, period.id);
+                      const key = cellKey(currentWeekStart, day, printGrade, period.id);
                       const entry = entries[key];
                       return (
                         <td key={key} style={{ border: "1px solid #999", padding: "6px", verticalAlign: "top" }}>
@@ -538,6 +610,80 @@ export default function ScheduleLedger() {
           <p className="lp-body" style={{ color: "#C8D3C6", fontSize: 14, margin: "6px 0 0" }}>
             Middle school timetable · Grades 6–9 · one class per grade
           </p>
+        </div>
+
+        {/* Week navigator */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 10,
+            padding: "12px 24px",
+            background: "#1F3229",
+            borderBottom: "1px solid #17251E",
+            flexWrap: "wrap",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <button
+              onClick={() => setCurrentWeekStart(shiftWeekISO(currentWeekStart, -1))}
+              aria-label="Previous week"
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "none",
+                borderRadius: 7,
+                padding: 7,
+                cursor: "pointer",
+                color: "#E8E4D6",
+                display: "flex",
+              }}
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <div className="lp-body" style={{ display: "flex", alignItems: "center", gap: 7, color: "#F6F3EA" }}>
+              <CalendarDays size={14} color="#D98E2B" />
+              <span style={{ fontSize: 13.5, fontWeight: 700 }}>{formatWeekRangeLabel(currentWeekStart)}</span>
+            </div>
+            <button
+              onClick={() => setCurrentWeekStart(shiftWeekISO(currentWeekStart, 1))}
+              aria-label="Next week"
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "none",
+                borderRadius: 7,
+                padding: 7,
+                cursor: "pointer",
+                color: "#E8E4D6",
+                display: "flex",
+              }}
+            >
+              <ChevronRight size={16} />
+            </button>
+            {currentWeekStart !== thisRealWeek && (
+              <button
+                onClick={() => setCurrentWeekStart(thisRealWeek)}
+                className="lp-body"
+                style={{
+                  background: "none",
+                  border: "1px solid rgba(255,255,255,0.25)",
+                  borderRadius: 7,
+                  padding: "5px 10px",
+                  fontSize: 11.5,
+                  fontWeight: 600,
+                  color: "#C8D3C6",
+                  cursor: "pointer",
+                }}
+              >
+                This week
+              </button>
+            )}
+          </div>
+          {hasUnsyncedChanges && (
+            <span className="lp-mono" style={{ fontSize: 10.5, color: "#E0B15A", letterSpacing: "0.03em" }}>
+              Unsaved changes — tap "Save to GitHub" to sync
+            </span>
+          )}
         </div>
 
         {/* Print bar */}
@@ -809,6 +955,10 @@ export default function ScheduleLedger() {
         >
           {DAYS.map((day) => {
             const isActive = activeDay === day;
+            const dateLabel = dateForDayInWeek(currentWeekStart, day).toLocaleDateString(undefined, {
+              month: "short",
+              day: "numeric",
+            });
             return (
               <button
                 key={day}
@@ -817,7 +967,7 @@ export default function ScheduleLedger() {
                 style={{
                   border: "none",
                   cursor: "pointer",
-                  padding: "10px 20px",
+                  padding: "8px 20px 10px",
                   fontSize: 13,
                   fontWeight: 600,
                   letterSpacing: "0.03em",
@@ -825,9 +975,19 @@ export default function ScheduleLedger() {
                   color: isActive ? "#243229" : "#9CAC9C",
                   borderRadius: isActive ? "8px 8px 0 0" : "0",
                   whiteSpace: "nowrap",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 1,
                 }}
               >
-                {day}
+                <span>{day}</span>
+                <span
+                  className="lp-mono"
+                  style={{ fontSize: 10, opacity: 0.75, color: isActive ? "#5B6B5B" : "#7A8A7A" }}
+                >
+                  {dateLabel}
+                </span>
               </button>
             );
           })}
@@ -927,7 +1087,7 @@ export default function ScheduleLedger() {
                           </div>
                         </td>
                         {GRADES.map((grade) => {
-                          const key = cellKey(activeDay, grade, period.id);
+                          const key = cellKey(currentWeekStart, activeDay, grade, period.id);
                           const entry = entries[key];
                           return (
                             <td
@@ -1050,7 +1210,12 @@ export default function ScheduleLedger() {
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
                 <div>
                   <div className="lp-mono" style={{ fontSize: 11, color: "#8A9B8A", letterSpacing: "0.06em" }}>
-                    {editing.day.toUpperCase()} · GRADE {editing.grade} · {activePeriod.time}
+                    {FULL_DAYS[editing.day].toUpperCase()}{" "}
+                    {dateForDayInWeek(editing.weekStart, editing.day).toLocaleDateString(undefined, {
+                      month: "short",
+                      day: "numeric",
+                    })}{" "}
+                    · GRADE {editing.grade} · {activePeriod.time}
                   </div>
                   <h2 className="lp-body" style={{ fontSize: 18, fontWeight: 700, margin: "4px 0 0", color: "#243229" }}>
                     Edit class
@@ -1178,15 +1343,15 @@ export default function ScheduleLedger() {
                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: 22 }}>
                   <button
                     onClick={deleteEntry}
-                    disabled={!entries[cellKey(editing.day, editing.grade, editing.periodId)]}
+                    disabled={!entries[cellKey(editing.weekStart, editing.day, editing.grade, editing.periodId)]}
                     style={{
                       display: "flex",
                       alignItems: "center",
                       gap: 6,
                       background: "none",
                       border: "none",
-                      color: entries[cellKey(editing.day, editing.grade, editing.periodId)] ? "#C1584A" : "#D8D2C2",
-                      cursor: entries[cellKey(editing.day, editing.grade, editing.periodId)] ? "pointer" : "default",
+                      color: entries[cellKey(editing.weekStart, editing.day, editing.grade, editing.periodId)] ? "#C1584A" : "#D8D2C2",
+                      cursor: entries[cellKey(editing.weekStart, editing.day, editing.grade, editing.periodId)] ? "pointer" : "default",
                       fontSize: 13,
                       fontWeight: 600,
                       padding: "8px 4px",
