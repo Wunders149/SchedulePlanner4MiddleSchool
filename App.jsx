@@ -114,12 +114,13 @@ export default function ScheduleLedger() {
       } else {
         triggerPrint();
       }
-      const handleAfterPrint = () => setPrintGrade(null);
-      window.addEventListener("afterprint", handleAfterPrint);
-      return () => {
-        clearTimeout(printTimeout.current);
-        window.removeEventListener("afterprint", handleAfterPrint);
-      };
+      // NOTE: we deliberately do NOT auto-hide the print sheet on the
+      // 'afterprint' event. On Android, that event tends to fire as soon as
+      // the print preview opens — well before the PDF is actually generated
+      // in the background. If we unmount the print content at that point,
+      // the async PDF render captures an empty page. Instead, the person
+      // closes the print view manually with the button once they're done.
+      return () => clearTimeout(printTimeout.current);
     }
   }, [printGrade]);
 
@@ -217,6 +218,7 @@ export default function ScheduleLedger() {
             width: 100%;
           }
           .print-table td, .print-table th { page-break-inside: avoid; }
+          .no-print { display: none !important; }
           @page { size: A4 landscape; margin: 9mm; }
         }
       `}</style>
@@ -226,6 +228,37 @@ export default function ScheduleLedger() {
           current week for this grade fills the available space. */}
       {printGrade && (
         <div className="print-sheet lp-body" style={{ color: "#111", background: "#fff" }}>
+          <div
+            className="no-print"
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              padding: "10px 14px",
+              background: "#EDE8D8",
+              borderBottom: "1px solid #D8D2C2",
+            }}
+          >
+            <button
+              onClick={() => setPrintGrade(null)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                background: "#2E4034",
+                color: "#F6F3EA",
+                border: "none",
+                borderRadius: 8,
+                padding: "8px 14px",
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: "pointer",
+              }}
+            >
+              <X size={14} />
+              Close print view
+            </button>
+          </div>
+          <div style={{ padding: "16px 20px" }}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 8 }}>
             <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: 20, margin: 0 }}>
               Grade {printGrade} — Weekly Schedule
@@ -318,6 +351,7 @@ export default function ScheduleLedger() {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 
