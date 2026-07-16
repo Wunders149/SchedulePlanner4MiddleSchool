@@ -100,7 +100,20 @@ export default function ScheduleLedger() {
   // print dialog once it's painted, and clear it again afterward.
   useEffect(() => {
     if (printGrade) {
-      printTimeout.current = setTimeout(() => window.print(), 80);
+      const triggerPrint = () => {
+        // Two animation frames ensures the browser has actually painted
+        // the newly-mounted print sheet before we grab it for printing.
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            printTimeout.current = setTimeout(() => window.print(), 250);
+          });
+        });
+      };
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(triggerPrint);
+      } else {
+        triggerPrint();
+      }
       const handleAfterPrint = () => setPrintGrade(null);
       window.addEventListener("afterprint", handleAfterPrint);
       return () => {
@@ -197,15 +210,12 @@ export default function ScheduleLedger() {
         .print-sheet { display: none; }
 
         @media print {
-          html, body { margin: 0; padding: 0; height: 100%; }
+          html, body { margin: 0; padding: 0; }
           .app-shell { display: none !important; }
           .print-sheet {
-            display: flex !important;
-            flex-direction: column;
+            display: block !important;
             width: 100%;
-            height: 100%;
           }
-          .print-table { flex: 1; }
           .print-table td, .print-table th { page-break-inside: avoid; }
           @page { size: A4 landscape; margin: 9mm; }
         }
@@ -227,7 +237,7 @@ export default function ScheduleLedger() {
           </div>
           <table
             className="print-table"
-            style={{ width: "100%", height: "100%", borderCollapse: "collapse", tableLayout: "fixed", fontSize: 11 }}
+            style={{ width: "100%", borderCollapse: "collapse", tableLayout: "fixed", fontSize: 12.5 }}
           >
             <colgroup>
               <col style={{ width: "11%" }} />
