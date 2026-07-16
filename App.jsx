@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Plus, X, Pencil, Trash2, Users, Loader2, BookOpen, Printer } from "lucide-react";
+import { Plus, X, Pencil, Trash2, Users, Loader2, BookOpen, Printer, Download, Upload, Save } from "lucide-react";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const FULL_DAYS = {
@@ -21,6 +21,67 @@ const PERIODS = [
 
 const cellKey = (day, grade, periodId) => `${day}-${grade}-${periodId}`;
 const STORAGE_KEY = "schedule-entries-v1";
+const GH_TOKEN_KEY = "schedule-ledger-gh-token";
+
+// Your repo details — update these three if you ever rename/move the repo.
+const GH_OWNER = "Wunders149";
+const GH_REPO = "SchedulePlanner4MiddleSchool";
+const GH_BRANCH = "main";
+const GH_FILE_PATH = "public/schedule-data.json";
+
+// Safely base64-encode a unicode JSON string for GitHub's API.
+function toBase64Utf8(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
+// Fetches the file's current sha (needed to update it) and pushes new
+// content as a commit directly to the branch via GitHub's REST API.
+async function saveScheduleToGitHub(token, entriesObj) {
+  const contentStr = JSON.stringify(entriesObj, null, 2);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    Accept: "application/vnd.github+json",
+  };
+
+  let sha;
+  const getRes = await fetch(
+    `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE_PATH}?ref=${GH_BRANCH}`,
+    { headers }
+  );
+  if (getRes.ok) {
+    const data = await getRes.json();
+    sha = data.sha;
+  } else if (getRes.status !== 404) {
+    const errData = await getRes.json().catch(() => ({}));
+    throw new Error(errData.message || `Couldn't reach the repo (status ${getRes.status}).`);
+  }
+
+  const putRes = await fetch(
+    `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE_PATH}`,
+    {
+      method: "PUT",
+      headers: { ...headers, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: `Update schedule data — ${new Date().toISOString()}`,
+        content: toBase64Utf8(contentStr),
+        branch: GH_BRANCH,
+        ...(sha ? { sha } : {}),
+      }),
+    }
+  );
+
+  if (!putRes.ok) {
+    const errData = await putRes.json().catch(() => ({}));
+    if (putRes.status === 401) {
+      throw new Error("That token was rejected — it may be invalid or expired.");
+    }
+    if (putRes.status === 404) {
+      throw new Error("Repo or file path not found — check GH_OWNER/GH_REPO/GH_FILE_PATH in the code.");
+    }
+    throw new Error(errData.message || `GitHub rejected the save (status ${putRes.status}).`);
+  }
+  return putRes.json();
+}
 
 const SUBJECT_COLORS = {};
 const PALETTE = ["#D98E2B", "#5B7F73", "#B5563F", "#6C7FB0", "#8A9B4E", "#A0678A", "#3E7C8C"];
@@ -72,17 +133,47 @@ export default function ScheduleLedger() {
   const [teacherInput, setTeacherInput] = useState("");
   const [error, setError] = useState("");
   const [printGrade, setPrintGrade] = useState(null);
+  const [importMessage, setImportMessage] = useState("");
+  const [ghSaving, setGhSaving] = useState(false);
+  const [ghMessage, setGhMessage] = useState(null); // {type: 'ok'|'error', text}
+  const [showTokenPrompt, setShowTokenPrompt] = useState(false);
+  const [tokenInput, setTokenInput] = useState("");
   const printTimeout = useRef(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
-    try {
-      const rawStr = window.localStorage.getItem(STORAGE_KEY);
-      if (rawStr) setEntries(normalizeEntries(JSON.parse(rawStr)));
-    } catch (e) {
-      // no existing data yet — that's fine
-    } finally {
-      setLoaded(true);
-    }
+    (async () => {
+      try {
+        const rawStr = window.localStorage.getItem(STORAGE_KEY);
+        if (rawStr) {
+          // We already have data saved in this browser — use it. This is
+          // never overwritten by the bundled JSON file, so nothing already
+          // saved is ever lost.
+          setEntries(normalizeEntries(JSON.parse(rawStr)));
+        } else {
+          // No local data yet (first visit, or a different browser/device):
+          // fall back to the JSON file bundled with the site, if it has
+          // anything in it.
+          try {
+            const res = await fetch(`${import.meta.env.BASE_URL}schedule-data.json`);
+            if (res.ok) {
+              const json = await res.json();
+              const normalized = normalizeEntries(json);
+              if (Object.keys(normalized).length > 0) {
+                setEntries(normalized);
+                window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+              }
+            }
+          } catch (e) {
+            // No bundled file, or it failed to load — fine, just start empty.
+          }
+        }
+      } catch (e) {
+        // no existing data yet — that's fine
+      } finally {
+        setLoaded(true);
+      }
+    })();
   }, []);
 
   const persist = useCallback((next) => {
@@ -95,6 +186,79 @@ export default function ScheduleLedger() {
       setSaving(false);
     }
   }, []);
+
+  // Downloads the current schedule as a JSON file. Upload this file to
+  // /public/schedule-data.json in the repo to make it the permanent,
+  // shipped-with-the-site starting point for anyone visiting fresh.
+  const exportJSON = () => {
+    const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "schedule-data.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const triggerImport = () => fileInputRef.current?.click();
+
+  const handleImportFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      try {
+        const parsed = JSON.parse(evt.target.result);
+        const normalized = normalizeEntries(parsed);
+        setEntries(normalized);
+        persist(normalized);
+        setImportMessage(`Imported ${Object.keys(normalized).length} class${Object.keys(normalized).length === 1 ? "" : "es"}.`);
+      } catch (err) {
+        setImportMessage("That file couldn't be read — make sure it's a JSON export from this app.");
+      }
+    };
+    reader.readAsText(file);
+    // reset so selecting the same file again still fires onChange
+    e.target.value = "";
+  };
+
+  const runGitHubSave = async (token) => {
+    setGhSaving(true);
+    setGhMessage(null);
+    try {
+      await saveScheduleToGitHub(token, entries);
+      window.localStorage.setItem(GH_TOKEN_KEY, token);
+      setGhMessage({ type: "ok", text: "Saved to GitHub — your site will redeploy shortly." });
+    } catch (err) {
+      setGhMessage({ type: "error", text: err.message || "Something went wrong saving to GitHub." });
+    } finally {
+      setGhSaving(false);
+    }
+  };
+
+  const handleSaveToGitHub = () => {
+    const existingToken = window.localStorage.getItem(GH_TOKEN_KEY);
+    if (existingToken) {
+      runGitHubSave(existingToken);
+    } else {
+      setTokenInput("");
+      setShowTokenPrompt(true);
+    }
+  };
+
+  const confirmTokenAndSave = () => {
+    const token = tokenInput.trim();
+    if (!token) return;
+    setShowTokenPrompt(false);
+    runGitHubSave(token);
+  };
+
+  const forgetToken = () => {
+    window.localStorage.removeItem(GH_TOKEN_KEY);
+    setGhMessage({ type: "ok", text: "Token forgotten. You'll be asked to paste it again next save." });
+  };
 
   // Print handling: render the printable sheet, then trigger the browser
   // print dialog once it's painted, and clear it again afterward.
@@ -420,6 +584,217 @@ export default function ScheduleLedger() {
             </button>
           ))}
         </div>
+
+        {/* Data backup bar */}
+        <div
+          className="lp-scrollbar"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "10px 24px",
+            background: "#F6F3EA",
+            borderBottom: "1px solid #D8D2C2",
+            overflowX: "auto",
+          }}
+        >
+          <span
+            className="lp-mono"
+            style={{ fontSize: 11, color: "#8A9B8A", letterSpacing: "0.06em", whiteSpace: "nowrap" }}
+          >
+            BACKUP:
+          </span>
+          <button
+            onClick={handleSaveToGitHub}
+            disabled={ghSaving}
+            className="lp-body"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              background: "#2E4034",
+              border: "none",
+              borderRadius: 8,
+              padding: "6px 14px",
+              fontSize: 12.5,
+              fontWeight: 700,
+              color: "#F6F3EA",
+              cursor: ghSaving ? "default" : "pointer",
+              opacity: ghSaving ? 0.7 : 1,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {ghSaving ? <Loader2 size={13} style={{ animation: "spin 1s linear infinite" }} /> : <Save size={13} />}
+            {ghSaving ? "Saving…" : "Save to GitHub"}
+          </button>
+          <button
+            onClick={exportJSON}
+            className="lp-body"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              background: "none",
+              border: "1px solid #D8D2C2",
+              borderRadius: 8,
+              padding: "6px 12px",
+              fontSize: 12.5,
+              fontWeight: 600,
+              color: "#5B6B5B",
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <Download size={13} />
+            Export JSON
+          </button>
+          <button
+            onClick={triggerImport}
+            className="lp-body"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              background: "none",
+              border: "1px solid #D8D2C2",
+              borderRadius: 8,
+              padding: "6px 12px",
+              fontSize: 12.5,
+              fontWeight: 600,
+              color: "#5B6B5B",
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <Upload size={13} />
+            Import JSON
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="application/json"
+            onChange={handleImportFile}
+            style={{ display: "none" }}
+          />
+          {importMessage && (
+            <span className="lp-body" style={{ fontSize: 12, color: "#5B7F73" }}>
+              {importMessage}
+            </span>
+          )}
+          {ghMessage && (
+            <span
+              className="lp-body"
+              style={{ fontSize: 12, color: ghMessage.type === "error" ? "#C1584A" : "#5B7F73" }}
+            >
+              {ghMessage.text}
+            </span>
+          )}
+          {window.localStorage.getItem(GH_TOKEN_KEY) && (
+            <button
+              onClick={forgetToken}
+              className="lp-body"
+              style={{
+                background: "none",
+                border: "none",
+                color: "#A0A895",
+                fontSize: 11,
+                textDecoration: "underline",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Forget saved token
+            </button>
+          )}
+        </div>
+
+        {/* Token prompt modal */}
+        {showTokenPrompt && (
+          <div
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(36, 50, 41, 0.45)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 60,
+              padding: 20,
+            }}
+            onClick={() => setShowTokenPrompt(false)}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="lp-body"
+              style={{
+                background: "#FFFDF8",
+                borderRadius: 14,
+                width: "100%",
+                maxWidth: 400,
+                padding: 24,
+                boxShadow: "0 20px 60px rgba(0,0,0,0.25)",
+              }}
+            >
+              <h2 style={{ fontSize: 17, fontWeight: 700, margin: "0 0 8px", color: "#243229" }}>
+                Connect to GitHub
+              </h2>
+              <p style={{ fontSize: 13, color: "#5B6B5B", lineHeight: 1.5, margin: "0 0 14px" }}>
+                Paste a GitHub personal access token with write access to your repo. It's saved only in
+                this browser — never in the site's code.
+              </p>
+              <input
+                type="password"
+                value={tokenInput}
+                onChange={(e) => setTokenInput(e.target.value)}
+                placeholder="github_pat_..."
+                autoFocus
+                style={{
+                  width: "100%",
+                  padding: "10px 12px",
+                  borderRadius: 8,
+                  border: "1px solid #D8D2C2",
+                  fontSize: 14,
+                  fontFamily: "inherit",
+                  boxSizing: "border-box",
+                }}
+              />
+              <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 18 }}>
+                <button
+                  onClick={() => setShowTokenPrompt(false)}
+                  style={{
+                    background: "none",
+                    border: "1px solid #D8D2C2",
+                    borderRadius: 8,
+                    padding: "9px 16px",
+                    cursor: "pointer",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: "#5B6B5B",
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmTokenAndSave}
+                  disabled={!tokenInput.trim()}
+                  style={{
+                    background: "#D98E2B",
+                    border: "none",
+                    borderRadius: 8,
+                    padding: "9px 16px",
+                    cursor: tokenInput.trim() ? "pointer" : "default",
+                    opacity: tokenInput.trim() ? 1 : 0.6,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: "#2E2410",
+                  }}
+                >
+                  Save & connect
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Day tabs */}
         <div
