@@ -33,14 +33,27 @@ function colorFor(name) {
   return SUBJECT_COLORS[name];
 }
 
-// Migrate old entries (which used `activity` instead of `title`) so existing
-// saved data keeps working after this update.
+// Turn a description into a clean array of bullet items, whatever shape
+// it happens to be in (old saved data stored it as a single string).
+function toDescriptionList(description) {
+  if (Array.isArray(description)) return description.filter((x) => x && x.trim());
+  if (typeof description === "string" && description.trim()) {
+    return description
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+// Migrate old entries (which used `activity` instead of `title`, and a plain
+// string `description`) so existing saved data keeps working.
 function normalizeEntries(raw) {
   const next = {};
   Object.entries(raw || {}).forEach(([key, entry]) => {
     next[key] = {
       title: entry.title ?? entry.activity ?? "",
-      description: entry.description ?? "",
+      description: toDescriptionList(entry.description),
       teachers: entry.teachers ?? [],
     };
   });
@@ -54,7 +67,7 @@ export default function ScheduleLedger() {
   const [activeDay, setActiveDay] = useState("Mon");
   const [editing, setEditing] = useState(null); // {day, grade, periodId}
   const [draftTitle, setDraftTitle] = useState("");
-  const [draftDescription, setDraftDescription] = useState("");
+  const [draftDescriptionText, setDraftDescriptionText] = useState("");
   const [draftTeachers, setDraftTeachers] = useState([]);
   const [teacherInput, setTeacherInput] = useState("");
   const [error, setError] = useState("");
@@ -102,7 +115,7 @@ export default function ScheduleLedger() {
     const existing = entries[key];
     setEditing({ day, grade, periodId });
     setDraftTitle(existing?.title || "");
-    setDraftDescription(existing?.description || "");
+    setDraftDescriptionText((existing?.description || []).join("\n"));
     setDraftTeachers(existing?.teachers || []);
     setTeacherInput("");
     setError("");
@@ -111,7 +124,7 @@ export default function ScheduleLedger() {
   const closeEditor = () => {
     setEditing(null);
     setDraftTitle("");
-    setDraftDescription("");
+    setDraftDescriptionText("");
     setDraftTeachers([]);
     setTeacherInput("");
   };
@@ -138,7 +151,7 @@ export default function ScheduleLedger() {
       ...entries,
       [key]: {
         title: draftTitle.trim(),
-        description: draftDescription.trim(),
+        description: toDescriptionList(draftDescriptionText),
         teachers: draftTeachers,
       },
     };
@@ -184,93 +197,117 @@ export default function ScheduleLedger() {
         .print-sheet { display: none; }
 
         @media print {
+          html, body { margin: 0; padding: 0; height: 100%; }
           .app-shell { display: none !important; }
-          .print-sheet { display: block !important; }
-          @page { margin: 16mm; }
+          .print-sheet {
+            display: flex !important;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+          }
+          .print-table { flex: 1; }
+          .print-table td, .print-table th { page-break-inside: avoid; }
+          @page { size: A4 landscape; margin: 9mm; }
         }
       `}</style>
 
       {/* ===== Printable sheet (only visible when printing) ===== */}
+      {/* Landscape A4, one page, day columns x period rows so the whole
+          current week for this grade fills the available space. */}
       {printGrade && (
         <div className="print-sheet lp-body" style={{ color: "#111", background: "#fff" }}>
-          <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: 22, margin: "0 0 2px" }}>
-            Grade {printGrade} — Weekly Schedule
-          </h1>
-          <p style={{ fontSize: 12, color: "#555", margin: "0 0 18px" }}>
-            Middle school timetable, Monday–Saturday
-          </p>
-          {DAYS.map((day) => (
-            <div key={day} style={{ marginBottom: 16, breakInside: "avoid" }}>
-              <h2
-                style={{
-                  fontSize: 14,
-                  fontWeight: 700,
-                  margin: "0 0 6px",
-                  paddingBottom: 4,
-                  borderBottom: "1.5px solid #222",
-                }}
-              >
-                {FULL_DAYS[day]}
-              </h2>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11.5 }}>
-                <tbody>
-                  {PERIODS.map((period) => {
-                    if (period.type === "break") {
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 8 }}>
+            <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: 20, margin: 0 }}>
+              Grade {printGrade} — Weekly Schedule
+            </h1>
+            <span style={{ fontSize: 11, color: "#666" }}>
+              Week of{" "}
+              {new Date().toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}
+            </span>
+          </div>
+          <table
+            className="print-table"
+            style={{ width: "100%", height: "100%", borderCollapse: "collapse", tableLayout: "fixed", fontSize: 11 }}
+          >
+            <colgroup>
+              <col style={{ width: "11%" }} />
+              {DAYS.map((d) => (
+                <col key={d} style={{ width: `${89 / DAYS.length}%` }} />
+              ))}
+            </colgroup>
+            <thead>
+              <tr>
+                <th style={{ border: "1px solid #999", padding: "5px 6px", background: "#EFEBDD", textAlign: "left" }}>
+                  Time
+                </th>
+                {DAYS.map((d) => (
+                  <th
+                    key={d}
+                    style={{ border: "1px solid #999", padding: "5px 6px", background: "#EFEBDD", textAlign: "left" }}
+                  >
+                    {FULL_DAYS[d]}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {PERIODS.map((period) => {
+                if (period.type === "break") {
+                  return (
+                    <tr key={period.id}>
+                      <td
+                        colSpan={DAYS.length + 1}
+                        style={{
+                          border: "1px solid #999",
+                          padding: "4px 6px",
+                          color: "#777",
+                          fontStyle: "italic",
+                          background: "#F7F5EE",
+                        }}
+                      >
+                        {period.label} · {period.time}
+                      </td>
+                    </tr>
+                  );
+                }
+                return (
+                  <tr key={period.id}>
+                    <td style={{ border: "1px solid #999", padding: "6px", verticalAlign: "top" }}>
+                      <div style={{ fontWeight: 700 }}>{period.label}</div>
+                      <div style={{ color: "#666" }}>{period.time}</div>
+                    </td>
+                    {DAYS.map((day) => {
+                      const key = cellKey(day, printGrade, period.id);
+                      const entry = entries[key];
                       return (
-                        <tr key={period.id}>
-                          <td
-                            colSpan={2}
-                            style={{
-                              padding: "4px 6px",
-                              color: "#777",
-                              fontStyle: "italic",
-                              borderBottom: "1px solid #ddd",
-                            }}
-                          >
-                            {period.label} · {period.time}
-                          </td>
-                        </tr>
-                      );
-                    }
-                    const key = cellKey(day, printGrade, period.id);
-                    const entry = entries[key];
-                    return (
-                      <tr key={period.id}>
-                        <td
-                          style={{
-                            padding: "6px 8px 6px 0",
-                            width: 130,
-                            verticalAlign: "top",
-                            borderBottom: "1px solid #ddd",
-                          }}
-                        >
-                          <div style={{ fontWeight: 600 }}>{period.label}</div>
-                          <div style={{ color: "#666" }}>{period.time}</div>
-                        </td>
-                        <td style={{ padding: "6px 0", verticalAlign: "top", borderBottom: "1px solid #ddd" }}>
+                        <td key={key} style={{ border: "1px solid #999", padding: "6px", verticalAlign: "top" }}>
                           {entry ? (
                             <>
                               <div style={{ fontWeight: 700 }}>{entry.title}</div>
-                              {entry.description && (
-                                <div style={{ color: "#444", margin: "2px 0" }}>{entry.description}</div>
+                              {entry.description.length > 0 && (
+                                <ul style={{ margin: "3px 0 0", paddingLeft: 14 }}>
+                                  {entry.description.map((item, i) => (
+                                    <li key={i} style={{ marginBottom: 1 }}>
+                                      {item}
+                                    </li>
+                                  ))}
+                                </ul>
                               )}
                               {entry.teachers.length > 0 && (
-                                <div style={{ color: "#555" }}>
-                                  Teacher{entry.teachers.length > 1 ? "s" : ""}: {entry.teachers.join(", ")}
-                                </div>
+                                <div style={{ color: "#555", marginTop: 3 }}>{entry.teachers.join(", ")}</div>
                               )}
                             </>
                           ) : (
-                            <span style={{ color: "#999" }}>—</span>
+                            <span style={{ color: "#bbb" }}>—</span>
                           )}
                         </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          ))}
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       )}
 
@@ -506,17 +543,20 @@ export default function ScheduleLedger() {
                                     >
                                       {entry.title}
                                     </div>
-                                    {entry.description && (
-                                      <div
+                                    {entry.description.length > 0 && (
+                                      <ul
                                         style={{
+                                          margin: "0 0 4px",
+                                          paddingLeft: 16,
                                           fontSize: 11.5,
                                           color: "#6B6558",
-                                          marginBottom: 4,
-                                          lineHeight: 1.3,
+                                          lineHeight: 1.35,
                                         }}
                                       >
-                                        {entry.description}
-                                      </div>
+                                        {entry.description.map((item, i) => (
+                                          <li key={i}>{item}</li>
+                                        ))}
+                                      </ul>
                                     )}
                                     {entry.teachers.length > 0 && (
                                       <div style={{ display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap" }}>
@@ -627,13 +667,13 @@ export default function ScheduleLedger() {
                 />
 
                 <label style={{ fontSize: 12, fontWeight: 600, color: "#5B6B5B", display: "block", margin: "16px 0 6px" }}>
-                  Description <span style={{ fontWeight: 400, color: "#A0A895" }}>(optional)</span>
+                  Description <span style={{ fontWeight: 400, color: "#A0A895" }}>(one item per line)</span>
                 </label>
                 <textarea
-                  value={draftDescription}
-                  onChange={(e) => setDraftDescription(e.target.value)}
-                  placeholder="e.g. Chapter 4 review, bring calculators"
-                  rows={3}
+                  value={draftDescriptionText}
+                  onChange={(e) => setDraftDescriptionText(e.target.value)}
+                  placeholder={"Chapter 4 review\nBring calculators\nQuiz on Friday"}
+                  rows={4}
                   style={{
                     width: "100%",
                     padding: "10px 12px",
@@ -645,6 +685,9 @@ export default function ScheduleLedger() {
                     resize: "vertical",
                   }}
                 />
+                <div style={{ fontSize: 11, color: "#A0A895", marginTop: 4 }}>
+                  Each line becomes its own bullet point.
+                </div>
 
                 <label style={{ fontSize: 12, fontWeight: 600, color: "#5B6B5B", display: "block", margin: "16px 0 6px" }}>
                   Teacher(s)
