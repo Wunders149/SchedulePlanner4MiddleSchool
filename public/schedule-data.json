@@ -1,13 +1,5 @@
 {
-  "Wed-6-p3": {
-    "title": "English",
-    "description": [],
-    "teachers": [
-      "Philibert",
-      "Selva"
-    ]
-  },
-  "Wed-7-p3": {
+  "2026-07-13|Wed-6-p3": {
     "title": "English Activities",
     "description": [
       "Games using video projection",
@@ -20,7 +12,20 @@
       "Selva"
     ]
   },
-  "Wed-8-p3": {
+  "2026-07-13|Wed-7-p3": {
+    "title": "English Activities",
+    "description": [
+      "Games using video projection",
+      "1. Which came first",
+      "2. Guess the opposite",
+      "3. Guess what the words is"
+    ],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
+  },
+  "2026-07-13|Wed-8-p3": {
     "title": "English Activities",
     "description": [
       "1. Activate games",
@@ -32,7 +37,7 @@
       "Myria"
     ]
   },
-  "Wed-6-p1": {
+  "2026-07-13|Wed-6-p1": {
     "title": "Festival & Celebrations",
     "description": [
       "1. Vocabulary",
@@ -44,7 +49,7 @@
       "Selva"
     ]
   },
-  "Wed-8-p2": {
+  "2026-07-13|Wed-8-p2": {
     "title": "English Activities",
     "description": [
       "Topics : Climate Change & Environment",
@@ -58,7 +63,7 @@
       "Mirya"
     ]
   },
-  "Mon-9-p1": {
+  "2026-07-13|Mon-9-p1": {
     "title": "English Class",
     "description": [
       "Listening: \" Should we cycle more \"",
@@ -70,7 +75,7 @@
       "Narindra"
     ]
   },
-  "Mon-9-p3": {
+  "2026-07-13|Mon-9-p3": {
     "title": "English Activities",
     "description": [
       "1. Bottle game",
@@ -83,7 +88,7 @@
       "Narindra"
     ]
   },
-  "Tue-9-p1": {
+  "2026-07-13|Tue-9-p1": {
     "title": "English Class",
     "description": [
       "Listening: \" Should we cycle more \"",
@@ -96,7 +101,7 @@
       "Selva"
     ]
   },
-  "Tue-9-p3": {
+  "2026-07-13|Tue-9-p3": {
     "title": "English Activities",
     "description": [
       "1. Bottle game",
@@ -109,7 +114,7 @@
       "Narindra"
     ]
   },
-  "Wed-9-p1": {
+  "2026-07-13|Wed-9-p1": {
     "title": "English Class",
     "description": [
       "Reading : \" Asteroids \"",
@@ -123,7 +128,7 @@
       "Myria"
     ]
   },
-  "Thu-9-p1": {
+  "2026-07-13|Thu-9-p1": {
     "title": "English Class",
     "description": [
       "Listening : \" Limiting screen time for children \"",
@@ -138,7 +143,7 @@
       "Selva"
     ]
   },
-  "Mon-8-p2": {
+  "2026-07-13|Mon-8-p2": {
     "title": "English Class",
     "description": [
       "Topics : \" Technology and social media \"",
@@ -153,7 +158,7 @@
       "Myria"
     ]
   },
-  "Mon-8-p3": {
+  "2026-07-13|Mon-8-p3": {
     "title": "English Activities",
     "description": [
       "1. Back writing",
@@ -165,7 +170,7 @@
       "Philibert"
     ]
   },
-  "Tue-8-p2": {
+  "2026-07-13|Tue-8-p2": {
     "title": "English Class",
     "description": [
       "Listening : \" Limiting screen time for children \"",
@@ -179,7 +184,7 @@
       "Selva"
     ]
   },
-  "Tue-8-p3": {
+  "2026-07-13|Tue-8-p3": {
     "title": "English Activities",
     "description": [
       "1.",
@@ -190,7 +195,7 @@
       "Narindra"
     ]
   },
-  "Mon-7-p2": {
+  "2026-07-13|Mon-7-p2": {
     "title": "English Class",
     "description": [
       "Topic : \" Clothes and Fashion \"",
@@ -205,7 +210,7 @@
       "Selva"
     ]
   },
-  "Mon-7-p3": {
+  "2026-07-13|Mon-7-p3": {
     "title": "English Activities",
     "description": [
       "1. Colour games",
@@ -217,7 +222,7 @@
       "Selva"
     ]
   },
-  "Tue-7-p2": {
+  "2026-07-13|Tue-7-p2": {
     "title": "English Class",
     "description": [
       "Topic: Weather & Seasons",
@@ -232,7 +237,7 @@
       "Myria"
     ]
   },
-  "Tue-7-p3": {
+  "2026-07-13|Tue-7-p3": {
     "title": "English Activities",
     "description": [
       "1. Story building",
@@ -244,7 +249,7 @@
       "Narindra"
     ]
   },
-  "Wed-7-p2": {
+  "2026-07-13|Wed-7-p2": {
     "title": "English Class",
     "description": [
       "Topic: Festival & Celebrations",
@@ -258,7 +263,7 @@
       "Selva"
     ]
   },
-  "Thu-7-p2": {
+  "2026-07-13|Thu-7-p2": {
     "title": "English Activities",
     "description": [
       "Topics : Environment & Nature",
@@ -269,6 +274,46 @@
     "teachers": [
       "Philibert",
       "Myria"
+    ]
+  },
+  "2026-07-13|Thu-8-p3": {
+    "title": "English Activities",
+    "description": [
+      "1."
+    ],
+    "teachers": [
+      "Selva",
+      "Philibert"
+    ]
+  },
+  "2026-07-13|Thu-9-p3": {
+    "title": "English Activities",
+    "description": [
+      "1."
+    ],
+    "teachers": [
+      "Selva",
+      "Philibert"
+    ]
+  },
+  "2026-07-13|Thu-6-p3": {
+    "title": "English Activities",
+    "description": [
+      "1."
+    ],
+    "teachers": [
+      "Myria",
+      "Narindra"
+    ]
+  },
+  "2026-07-13|Thu-7-p3": {
+    "title": "English Activities",
+    "description": [
+      "1."
+    ],
+    "teachers": [
+      "Myria",
+      "Narindra"
     ]
   }
 }
