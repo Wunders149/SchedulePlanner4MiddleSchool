@@ -38,8 +38,9 @@
     ]
   },
   "2026-07-13|Wed-6-p1": {
-    "title": "Festival & Celebrations",
+    "title": "English Class",
     "description": [
+      "Topic: Festival & Celebrations",
       "1. Vocabulary",
       "2. Grammar",
       "3. Text comprehension"
@@ -50,7 +51,7 @@
     ]
   },
   "2026-07-13|Wed-8-p2": {
-    "title": "English Activities",
+    "title": "English Class",
     "description": [
       "Topics : Climate Change & Environment",
       "1. Warm-up",
@@ -267,7 +268,7 @@
     ]
   },
   "2026-07-13|Thu-7-p2": {
-    "title": "English Activities",
+    "title": "English Class",
     "description": [
       "Topics : Environment & Nature",
       "1. Warm-up",
@@ -282,7 +283,10 @@
   "2026-07-13|Thu-8-p3": {
     "title": "English Activities",
     "description": [
-      "1."
+      "1. Tongue twister",
+      "2. The opposite game",
+      "3. Role play",
+      "4. Debate"
     ],
     "teachers": [
       "Selva",
@@ -292,7 +296,10 @@
   "2026-07-13|Thu-9-p3": {
     "title": "English Activities",
     "description": [
-      "1."
+      "1. Tongue twister",
+      "2. The opposite game",
+      "3. Role play",
+      "4. Debate"
     ],
     "teachers": [
       "Selva",
@@ -434,6 +441,20 @@
     "teachers": [
       "Myria",
       "Narindra"
+    ]
+  },
+  "2026-07-13|Thu-8-p2": {
+    "title": "English Class",
+    "description": [
+      "Listening : Should we cycle more",
+      "1. Warm-up",
+      "2. Tongue twister",
+      "3. Listening to 06 min English",
+      "4. Oral discussion"
+    ],
+    "teachers": [
+      "Narindra",
+      "Selva"
     ]
   }
 }
