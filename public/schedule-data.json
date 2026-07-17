@@ -72,7 +72,8 @@
       "3. Discussion"
     ],
     "teachers": [
-      "Narindra"
+      "Narindra",
+      "Myria"
     ]
   },
   "2026-07-13|Mon-9-p3": {
@@ -110,8 +111,8 @@
       "4. Debating on : \"Working in Madagascar or abroad\""
     ],
     "teachers": [
-      "Myria",
-      "Narindra"
+      "Narindra",
+      "Selva"
     ]
   },
   "2026-07-13|Wed-9-p1": {
@@ -167,7 +168,7 @@
     ],
     "teachers": [
       "Myria",
-      "Philibert"
+      "Narindra"
     ]
   },
   "2026-07-13|Tue-8-p2": {
@@ -187,12 +188,14 @@
   "2026-07-13|Tue-8-p3": {
     "title": "English Activities",
     "description": [
-      "1.",
-      "2."
+      "1. Bottle game",
+      "2. Which came first",
+      "3. The opposite of quiz",
+      "4. Debating on : \"Working in Madagascar or abroad\""
     ],
     "teachers": [
-      "Myria",
-      "Narindra"
+      "Narindra",
+      "Selva"
     ]
   },
   "2026-07-13|Mon-7-p2": {
@@ -218,8 +221,8 @@
       "3. Role play"
     ],
     "teachers": [
-      "Narindra",
-      "Selva"
+      "Selva",
+      "Philibert"
     ]
   },
   "2026-07-13|Tue-7-p2": {
@@ -246,7 +249,7 @@
     ],
     "teachers": [
       "Myria",
-      "Narindra"
+      "Philibert"
     ]
   },
   "2026-07-13|Wed-7-p2": {
@@ -312,7 +315,10 @@
   "2026-07-13|Thu-7-p3": {
     "title": "English Activities",
     "description": [
-      "1."
+      "1. Rhythms check",
+      "2. Flashcards games",
+      "3. Building sentences competition",
+      "4. Discussion"
     ],
     "teachers": [
       "Myria",
@@ -385,7 +391,7 @@
     ],
     "teachers": [
       "Selva",
-      "Narindra"
+      "Philibert"
     ]
   },
   "2026-07-13|Mon-6-p1": {
@@ -416,6 +422,18 @@
     "teachers": [
       "Philibert",
       "Myria"
+    ]
+  },
+  "2026-07-13|Wed-9-p3": {
+    "title": "English Activities",
+    "description": [
+      "1. Activate games",
+      "2. Story telling : \" Which one the world will be better without? \"",
+      "3. Yes or No question"
+    ],
+    "teachers": [
+      "Myria",
+      "Narindra"
     ]
   }
 }
