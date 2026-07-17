@@ -299,7 +299,10 @@
   "2026-07-13|Thu-6-p3": {
     "title": "English Activities",
     "description": [
-      "1."
+      "1. Rhythms check",
+      "2. Flashcards games",
+      "3. Building sentences competition",
+      "4. Discussion"
     ],
     "teachers": [
       "Myria",
@@ -314,6 +317,90 @@
     "teachers": [
       "Myria",
       "Narindra"
+    ]
+  },
+  "2026-07-13|Fri-6-p1": {
+    "title": "English Class",
+    "description": [
+      "Topic: Jobs & Occupation",
+      "1. Warm-up : \" Name your dream job \"",
+      "2. Vocabulary + STEM related Job",
+      "3. Grammar : Expressing Future plans",
+      "4. Reading & Understanding Text"
+    ],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
+  },
+  "2026-07-13|Thu-6-p1": {
+    "title": "English Class",
+    "description": [
+      "Topic : Nature & Environment",
+      "1. Warm-up: Tongue Twister",
+      "2. Oral question to introduce the topic",
+      "3. Explain lessons ( Vocabulary + grammar )",
+      "4. Exercise session",
+      "5. Gamified English",
+      "6. Listening & reading session"
+    ],
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
+  },
+  "2026-07-13|Tue-6-p3": {
+    "title": "English Activities",
+    "description": [
+      "1. Story building",
+      "2. Activate games",
+      "3. Debate: \" Which is better: movies or books? \""
+    ],
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
+  },
+  "2026-07-13|Tue-6-p1": {
+    "title": "English Class",
+    "description": [
+      "Topic: Weather & Seasons",
+      "1. Identify different weather conditions",
+      "2. Name the 4 seasons",
+      "3. Grammar & Vocabulary",
+      "4. Describe weather conditions"
+    ],
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
+  },
+  "2026-07-13|Mon-6-p3": {
+    "title": "English Activities",
+    "description": [
+      "1. Colour games",
+      "2. Listening",
+      "3. Q/A Session",
+      "4. Role play"
+    ],
+    "teachers": [
+      "Selva",
+      "Narindra"
+    ]
+  },
+  "2026-07-13|Mon-6-p1": {
+    "title": "English Class",
+    "description": [
+      "Topic: Clothes & Fashion",
+      "1. Warm-up",
+      "2. Vocabulary acquisition",
+      "3. Watching short videos",
+      "4. Grammar",
+      "5. STEM connection"
+    ],
+    "teachers": [
+      "Philibert",
+      "Selva"
     ]
   }
 }
