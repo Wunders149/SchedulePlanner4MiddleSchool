@@ -456,5 +456,83 @@
       "Narindra",
       "Selva"
     ]
+  },
+  "2026-07-13|Fri-8-p3": {
+    "title": "English Activities",
+    "description": [
+      "Movie Time : The Pursuit Of Happiness",
+      "1. Warm-up",
+      "2. Tips for learning English",
+      "3. Movie session"
+    ],
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
+  },
+  "2026-07-13|Fri-9-p3": {
+    "title": "English Activities",
+    "description": [
+      "Movie Time : The Pursuit Of Happiness",
+      "1. Warm-up",
+      "2. Tips for learning English",
+      "3. Movie session"
+    ],
+    "teachers": [
+      "Philibert",
+      "Myria"
+    ]
+  },
+  "2026-07-13|Fri-9-p1": {
+    "title": "English Class",
+    "description": [
+      "Listening : \" Ecological Rickshaw driving away pollution \"",
+      "1. Open oral discussion",
+      "2. Games",
+      "3. Listening session (3 times)",
+      "4. Games",
+      "5. Oral discussion"
+    ],
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
+  },
+  "2026-07-13|Fri-7-p2": {
+    "title": "English Class",
+    "description": [
+      "Topic : Jobs and occupations",
+      "1. Identify and name different jobs",
+      "2. Talking about what people do at work",
+      "3. Improve listening and reading skills"
+    ],
+    "teachers": [
+      "Narindra",
+      "Selva"
+    ]
+  },
+  "2026-07-13|Fri-6-p3": {
+    "title": "English Activities",
+    "description": [
+      "Movie Time : Henry forgot everything",
+      "1. Job descriptions",
+      "2. Importance between love & money"
+    ],
+    "teachers": [
+      "Selva",
+      "Narindra"
+    ]
+  },
+  "2026-07-13|Fri-7-p3": {
+    "title": "English Activities",
+    "description": [
+      "Movie Time : Henry forgot everything",
+      "1. Job descriptions",
+      "2. Importance between love & money"
+    ],
+    "teachers": [
+      "Selva",
+      "Narindra"
+    ]
   }
 }
