@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Plus, X, Pencil, Trash2, Users, Loader2, BookOpen, Printer, Download, Upload, Save, ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
+import { Plus, X, Pencil, Trash2, Users, Loader2, BookOpen, Printer, Download, Upload, Save, ChevronLeft, ChevronRight, CalendarDays, LogOut, Lock } from "lucide-react";
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db } from "./firebase";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const FULL_DAYS = {
@@ -175,6 +178,14 @@ function normalizeEntries(raw) {
 }
 
 export default function ScheduleLedger() {
+  // --- Auth state ---
+  const [authLoading, setAuthLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const [loginSubmitting, setLoginSubmitting] = useState(false);
+
   const [entries, setEntries] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -198,6 +209,52 @@ export default function ScheduleLedger() {
   const lastSyncedSnapshot = useRef("{}");
 
   const thisRealWeek = getMondayISO(new Date());
+
+  // Listen for sign-in/sign-out. This is what makes the app "remember" you
+  // across visits on the same device, and lets any device recognize you the
+  // moment you log in.
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+      setAuthLoading(false);
+    });
+    return unsubscribe;
+  }, []);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoginError("");
+    setLoginSubmitting(true);
+    try {
+      await signInWithEmailAndPassword(auth, loginEmail.trim(), loginPassword);
+      setLoginPassword("");
+    } catch (err) {
+      setLoginError("Couldn't sign in — check your email and password and try again.");
+    } finally {
+      setLoginSubmitting(false);
+    }
+  };
+
+  const handleLogout = () => {
+    signOut(auth);
+  };
+
+  // Once logged in, fetch this account's saved GitHub token from Firestore
+  // (if any) so "Save to GitHub" works right away on a brand new device,
+  // with no re-typing needed.
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      try {
+        const snap = await getDoc(doc(db, "tokens", user.uid));
+        if (snap.exists() && snap.data().githubToken) {
+          window.localStorage.setItem(GH_TOKEN_KEY, snap.data().githubToken);
+        }
+      } catch (e) {
+        // Firestore unreachable — the local/cached token (if any) still works
+      }
+    })();
+  }, [user]);
 
   useEffect(() => {
     (async () => {
@@ -297,6 +354,13 @@ export default function ScheduleLedger() {
     try {
       await saveScheduleToGitHub(token, entries);
       window.localStorage.setItem(GH_TOKEN_KEY, token);
+      if (user) {
+        try {
+          await setDoc(doc(db, "tokens", user.uid), { githubToken: token });
+        } catch (e) {
+          // Token still works locally even if this sync fails
+        }
+      }
       lastSyncedSnapshot.current = JSON.stringify(entries);
       setHasUnsyncedChanges(false);
       setGhMessage({ type: "ok", text: "Saved to GitHub — your site will redeploy shortly." });
@@ -417,6 +481,141 @@ export default function ScheduleLedger() {
   };
 
   const activePeriod = editing ? PERIODS.find((p) => p.id === editing.periodId) : null;
+
+  const authStyles = `
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+    .lp-body { font-family: 'Inter', sans-serif; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  `;
+
+  if (authLoading) {
+    return (
+      <div
+        style={{
+          minHeight: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#2E4034",
+        }}
+      >
+        <style>{authStyles}</style>
+        <Loader2 color="#D98E2B" size={26} style={{ animation: "spin 1s linear infinite" }} />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div
+        style={{
+          minHeight: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#2E4034",
+          padding: 20,
+          fontFamily: "'Fraunces', Georgia, serif",
+        }}
+      >
+        <style>{authStyles}</style>
+        <form
+          onSubmit={handleLogin}
+          style={{
+            background: "#FFFDF8",
+            borderRadius: 14,
+            width: "100%",
+            maxWidth: 360,
+            padding: 28,
+            boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+            <Lock size={18} color="#D98E2B" />
+            <span
+              className="lp-body"
+              style={{ fontSize: 11, letterSpacing: "0.1em", color: "#8A9B8A", textTransform: "uppercase" }}
+            >
+              Admin sign-in
+            </span>
+          </div>
+          <h1 style={{ fontSize: 22, fontWeight: 700, margin: "0 0 18px", color: "#243229" }}>Schedule Ledger</h1>
+
+          <label
+            className="lp-body"
+            style={{ fontSize: 12, fontWeight: 600, color: "#5B6B5B", display: "block", marginBottom: 6 }}
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            value={loginEmail}
+            onChange={(e) => setLoginEmail(e.target.value)}
+            required
+            className="lp-body"
+            style={{
+              width: "100%",
+              padding: "10px 12px",
+              borderRadius: 8,
+              border: "1px solid #D8D2C2",
+              fontSize: 14,
+              boxSizing: "border-box",
+              marginBottom: 14,
+            }}
+          />
+
+          <label
+            className="lp-body"
+            style={{ fontSize: 12, fontWeight: 600, color: "#5B6B5B", display: "block", marginBottom: 6 }}
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            value={loginPassword}
+            onChange={(e) => setLoginPassword(e.target.value)}
+            required
+            className="lp-body"
+            style={{
+              width: "100%",
+              padding: "10px 12px",
+              borderRadius: 8,
+              border: "1px solid #D8D2C2",
+              fontSize: 14,
+              boxSizing: "border-box",
+            }}
+          />
+
+          {loginError && (
+            <div className="lp-body" style={{ color: "#C1584A", fontSize: 12.5, marginTop: 12 }}>
+              {loginError}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loginSubmitting}
+            className="lp-body"
+            style={{
+              width: "100%",
+              marginTop: 20,
+              background: "#D98E2B",
+              border: "none",
+              borderRadius: 8,
+              padding: "11px 16px",
+              cursor: loginSubmitting ? "default" : "pointer",
+              opacity: loginSubmitting ? 0.7 : 1,
+              fontSize: 14,
+              fontWeight: 700,
+              color: "#2E2410",
+            }}
+          >
+            {loginSubmitting ? "Signing in…" : "Sign in"}
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -595,14 +794,36 @@ export default function ScheduleLedger() {
       <div className="app-shell">
         {/* Header */}
         <div style={{ background: "#2E4034", padding: "28px 32px 22px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
-            <BookOpen size={22} color="#D98E2B" />
-            <span
-              className="lp-mono"
-              style={{ color: "#A9BFAE", fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase" }}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <BookOpen size={22} color="#D98E2B" />
+              <span
+                className="lp-mono"
+                style={{ color: "#A9BFAE", fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase" }}
+              >
+                Admin Console
+              </span>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="lp-body"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 5,
+                background: "rgba(255,255,255,0.08)",
+                border: "none",
+                borderRadius: 7,
+                padding: "6px 11px",
+                fontSize: 11.5,
+                fontWeight: 600,
+                color: "#C8D3C6",
+                cursor: "pointer",
+              }}
             >
-              Admin Console
-            </span>
+              <LogOut size={12} />
+              Sign out
+            </button>
           </div>
           <h1 style={{ color: "#F6F3EA", fontSize: 30, fontWeight: 700, margin: 0, letterSpacing: "-0.01em" }}>
             Schedule Ledger
