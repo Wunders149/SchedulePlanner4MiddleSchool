@@ -649,9 +649,10 @@ export default function ScheduleLedger() {
             display: block !important;
             width: 100%;
           }
+          .print-content-pad { padding: 0 !important; }
           .print-table td, .print-table th { page-break-inside: avoid; }
           .no-print { display: none !important; }
-          @page { size: A4 landscape; margin: 9mm; }
+          @page { size: A4 landscape; margin: 4mm; }
         }
       `}</style>
 
@@ -690,12 +691,12 @@ export default function ScheduleLedger() {
               Close print view
             </button>
           </div>
-          <div style={{ padding: "16px 20px" }}>
-          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 8 }}>
-            <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: 20, margin: 0 }}>
+          <div className="print-content-pad" style={{ padding: "16px 20px" }}>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
+            <h1 style={{ fontFamily: "'Fraunces', Georgia, serif", fontSize: 17, margin: 0 }}>
               Grade {printGrade} — Weekly Schedule
             </h1>
-            <span style={{ fontSize: 11, color: "#666" }}>Week of {formatWeekRangeLabel(currentWeekStart)}</span>
+            <span style={{ fontSize: 10.5, color: "#666" }}>Week of {formatWeekRangeLabel(currentWeekStart)}</span>
           </div>
           <table
             className="print-table"
