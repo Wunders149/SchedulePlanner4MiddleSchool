@@ -483,6 +483,7 @@ export default function ScheduleLedger() {
   const activePeriod = editing ? PERIODS.find((p) => p.id === editing.periodId) : null;
 
   const authStyles = `
+    html, body { margin: 0; padding: 0; }
     @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
     .lp-body { font-family: 'Inter', sans-serif; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -492,7 +493,7 @@ export default function ScheduleLedger() {
     return (
       <div
         style={{
-          minHeight: "100%",
+          minHeight: "100vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -509,7 +510,7 @@ export default function ScheduleLedger() {
     return (
       <div
         style={{
-          minHeight: "100%",
+          minHeight: "100vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -622,12 +623,13 @@ export default function ScheduleLedger() {
       style={{
         fontFamily: "'Fraunces', Georgia, serif",
         background: "#F6F3EA",
-        minHeight: "100%",
+        minHeight: "100vh",
         color: "#243229",
         padding: "0",
       }}
     >
       <style>{`
+        html, body { margin: 0; padding: 0; }
         @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
         .lp-body { font-family: 'Inter', sans-serif; }
         .lp-mono { font-family: 'IBM Plex Mono', monospace; }
