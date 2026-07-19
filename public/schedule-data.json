@@ -587,5 +587,37 @@
       "Selva",
       "Myria"
     ]
+  },
+  "2026-07-20|Mon-9-p1": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
+  },
+  "2026-07-20|Mon-6-p1": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
+  },
+  "2026-07-20|Mon-7-p2": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Philibert",
+      "Myria"
+    ]
+  },
+  "2026-07-20|Mon-8-p2": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Selva"
+    ]
   }
 }
