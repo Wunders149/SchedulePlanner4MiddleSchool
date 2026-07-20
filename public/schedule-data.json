@@ -613,7 +613,14 @@
   },
   "2026-07-20|Mon-7-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic : Travels & Holidays",
+      "1. Warm-up : guess the destination",
+      "2. Lessons plan",
+      "3. Vocabulary brainstorm",
+      "4. Grammar : Future plans & sequencing words",
+      "5. Games : Snap & Claps, Unscramble Words, Discussion"
+    ],
     "teachers": [
       "Philibert",
       "Myria"
