@@ -590,7 +590,14 @@
   },
   "2026-07-20|Mon-9-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Listening : What's going on in a footballer's brain?",
+      "1. Warm-up",
+      "2. Brainstorm",
+      "3. Listening",
+      "4. Vocabulary",
+      "5. Open Discussions"
+    ],
     "teachers": [
       "Philibert",
       "Selva"
