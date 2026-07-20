@@ -633,5 +633,21 @@
       "Narindra",
       "Selva"
     ]
+  },
+  "2026-07-20|Tue-6-p1": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
+  },
+  "2026-07-20|Tue-8-p2": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Philibert",
+      "Myria"
+    ]
   }
 }
