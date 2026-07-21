@@ -628,7 +628,14 @@
   },
   "2026-07-20|Mon-8-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Listening : What's in a Footballer's brain",
+      "1. Warm-up : How was the world cup",
+      "2. Listening session",
+      "3. Correction",
+      "4. Oral discussion related to the topic",
+      "5. Debate : Education"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
@@ -636,7 +643,13 @@
   },
   "2026-07-20|Tue-6-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic : My life right now",
+      "1. Warm-up: Guess the chores?",
+      "2. Vocabulary: Household Activities and Items",
+      "3. Grammar Focus: Present Continuous",
+      "4. Guided Practice"
+    ],
     "teachers": [
       "Philibert",
       "Selva"
@@ -644,10 +657,65 @@
   },
   "2026-07-20|Tue-8-p2": {
     "title": "English Class",
+    "description": [
+      "Reading : Robot Teachers",
+      "1. Lead-in: Take a position",
+      "2. Pre-reading vocabulary challenge",
+      "3. Reading",
+      "4. Comprehension tasks",
+      "5. Critical-thinking debate"
+    ],
+    "teachers": [
+      "Philibert",
+      "Myria"
+    ]
+  },
+  "2026-07-20|Tue-9-p1": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
+  },
+  "2026-07-20|Tue-7-p2": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Selva"
+    ]
+  },
+  "2026-07-20|Wed-9-p1": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
+  },
+  "2026-07-20|Wed-7-p2": {
+    "title": "English Class",
     "description": [],
     "teachers": [
       "Philibert",
       "Myria"
+    ]
+  },
+  "2026-07-20|Wed-6-p1": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
+  },
+  "2026-07-20|Wed-8-p2": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Selva"
     ]
   }
 }
