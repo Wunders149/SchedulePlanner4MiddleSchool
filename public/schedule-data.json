@@ -687,7 +687,14 @@
   },
   "2026-07-20|Tue-7-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic : My life right now",
+      "1. Ice breaker : \" Find someone who \"",
+      "2. Writing exercises",
+      "3. Reading exercises",
+      "4. Speaking sessions",
+      "5. Grammar : Present continuous & Past Continuous"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
