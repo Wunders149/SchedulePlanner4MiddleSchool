@@ -673,7 +673,13 @@
   },
   "2026-07-20|Tue-9-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Preparing Speech Topics",
+      "1. Warm-up",
+      "2. Oral Questions",
+      "3. Oral Discussions",
+      "4. Preparing Speech Topics"
+    ],
     "teachers": [
       "Narindra",
       "Myria"
@@ -689,7 +695,13 @@
   },
   "2026-07-20|Wed-9-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Reading : Robot Teachers",
+      "1. Lead-in: Take a position",
+      "2. Pre-reading vocabulary challenge",
+      "3. Reading & Comprehension tasks",
+      "4. Giving Opinions"
+    ],
     "teachers": [
       "Philibert",
       "Selva"
