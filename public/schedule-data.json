@@ -605,7 +605,13 @@
   },
   "2026-07-20|Mon-6-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: Travel and holiday",
+      "1. Warm-up: Personal Pronouns game",
+      "2. Lessons & Vocabulary & Grammar",
+      "3. Listening exercise & reading comprehension",
+      "4. Gamified English & Speaking sessions"
+    ],
     "teachers": [
       "Narindra",
       "Myria"
@@ -731,7 +737,13 @@
   },
   "2026-07-20|Wed-6-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic : Famous People",
+      "1. Warm-up",
+      "2. Writing exercises",
+      "3. Reading exercises",
+      "4. Air naming games"
+    ],
     "teachers": [
       "Narindra",
       "Myria"
@@ -747,7 +759,13 @@
   },
   "2026-07-20|Thu-6-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic : Family activities & holidays",
+      "1. Warm-up",
+      "2. Vocabulary & Vocabulary practice",
+      "3. Grammar: Future Continuous & Written Practice",
+      "4. Written task: My plan for next weekend"
+    ],
     "teachers": [
       "Philibert",
       "Selva"
