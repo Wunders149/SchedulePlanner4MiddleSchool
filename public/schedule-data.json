@@ -779,7 +779,14 @@
   },
   "2026-07-20|Thu-9-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Listening : Scared to speak English",
+      "1. Warm-up",
+      "2. Listening session",
+      "3. Correction",
+      "4. Oral discussion",
+      "4. Gamified English"
+    ],
     "teachers": [
       "Narindra",
       "Myria"
@@ -801,7 +808,13 @@
   },
   "2026-07-20|Thu-7-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: My next plan for the weekend",
+      "1. Warm-up",
+      "2. Exercise ( Team works )",
+      "3. Presentation",
+      "4. Gamified English"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
