@@ -751,7 +751,13 @@
   },
   "2026-07-20|Wed-8-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: Artificial Intelligence",
+      "1. Warm-up",
+      "2. Writing exercises",
+      "3. Oral discussions",
+      "4. Debate about love"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
@@ -781,7 +787,12 @@
   },
   "2026-07-20|Thu-8-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Listening : Scared of speaking English",
+      "1. Warm-up",
+      "2. Listening ( 3 times )",
+      "3. Answer comprehension quiz"
+    ],
     "teachers": [
       "Philibert",
       "Myria"
