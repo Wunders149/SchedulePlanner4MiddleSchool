@@ -871,5 +871,23 @@
       "Myria",
       "Narindra"
     ]
+  },
+  "2026-07-27|Mon-6-p1": {
+    "title": "English Class",
+    "description": [
+      "Listening : How reading shapes your brain"
+    ],
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
+  },
+  "2026-07-27|Mon-9-p1": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
   }
 }
