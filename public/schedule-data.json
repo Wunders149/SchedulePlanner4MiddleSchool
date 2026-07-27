@@ -893,5 +893,23 @@
       "Philibert",
       "Selva"
     ]
+  },
+  "2026-07-27|Mon-7-p2": {
+    "title": "English Class",
+    "description": [
+      "Topic"
+    ],
+    "teachers": [
+      "Philibert",
+      "Myria"
+    ]
+  },
+  "2026-07-27|Mon-8-p2": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Selva"
+    ]
   }
 }
