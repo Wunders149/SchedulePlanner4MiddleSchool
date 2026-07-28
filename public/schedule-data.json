@@ -914,7 +914,10 @@
   },
   "2026-07-27|Mon-8-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "1. Reading exercises",
+      "2. Speaking sessions"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
@@ -964,7 +967,9 @@
   },
   "2026-07-27|Mon-8-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Choosing English Speech Topics"
+    ],
     "teachers": [
       "Selva",
       "Narindra"
@@ -972,7 +977,9 @@
   },
   "2026-07-27|Mon-9-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Choosing English Speech topics"
+    ],
     "teachers": [
       "Selva",
       "Narindra"
@@ -980,7 +987,14 @@
   },
   "2026-07-27|Tue-8-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topics : Famous inventors & innovations",
+      "A. Gamified English:",
+      "1. Mountain Climbing,",
+      "2. Antonym Words Search,",
+      "3. A Maps Mind Map",
+      "4. Describing a STEM invention"
+    ],
     "teachers": [
       "Philibert",
       "Myria"
