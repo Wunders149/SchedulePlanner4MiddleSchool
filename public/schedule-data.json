@@ -922,7 +922,13 @@
   },
   "2026-07-27|Tue-6-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic : My goal before I turn 18",
+      "1. Warm-up",
+      "2. Lessons : Vocabulary + Grammar (Future Perfect)",
+      "3. Practice & Correction",
+      "4. Discussion"
+    ],
     "teachers": [
       "Philibert",
       "Selva"
@@ -970,6 +976,22 @@
     "teachers": [
       "Selva",
       "Narindra"
+    ]
+  },
+  "2026-07-27|Tue-8-p2": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Philibert",
+      "Myria"
+    ]
+  },
+  "2026-07-27|Tue-7-p2": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Selva"
     ]
   }
 }
