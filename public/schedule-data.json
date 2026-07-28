@@ -875,11 +875,10 @@
   "2026-07-27|Mon-6-p1": {
     "title": "English Class",
     "description": [
-      "Listening : How reading shapes your brain",
+      "Reading & Speaking session",
       "1. Warm-up",
-      "2. Lead-in : Vocabulary",
-      "3. Listening : 3 Times",
-      "4. Comprehension & Correction"
+      "2. Self presentation",
+      "3. Grammar: Irregular Verbs"
     ],
     "teachers": [
       "Narindra",
@@ -888,7 +887,13 @@
   },
   "2026-07-27|Mon-9-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Listening : How reading shapes your brain",
+      "1. Warm-up",
+      "2. Lead-in : Vocabulary",
+      "3. Listening : 3 Times",
+      "4. Comprehension & Correction"
+    ],
     "teachers": [
       "Philibert",
       "Selva"
@@ -929,6 +934,42 @@
     "teachers": [
       "Narindra",
       "Myria"
+    ]
+  },
+  "2026-07-27|Mon-6-p3": {
+    "title": "English Activities",
+    "description": [
+      "English Role Play Preparation"
+    ],
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
+  },
+  "2026-07-27|Mon-7-p3": {
+    "title": "English Activities",
+    "description": [
+      "English Role Play Preparation"
+    ],
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
+  },
+  "2026-07-27|Mon-8-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Selva",
+      "Narindra"
+    ]
+  },
+  "2026-07-27|Mon-9-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Selva",
+      "Narindra"
     ]
   }
 }
