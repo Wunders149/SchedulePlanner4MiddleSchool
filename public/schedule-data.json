@@ -939,7 +939,13 @@
   },
   "2026-07-27|Tue-9-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: \" Success & Goals \"",
+      "1. Icebreaker: Oral discussion",
+      "2. Vocabulary related to success",
+      "3. Speaking sessions",
+      "4. Debate class"
+    ],
     "teachers": [
       "Narindra",
       "Myria"
@@ -1006,6 +1012,60 @@
     "teachers": [
       "Narindra",
       "Selva"
+    ]
+  },
+  "2026-07-27|Wed-9-p1": {
+    "title": "English Class",
+    "description": [
+      "Reading: How humans evolved language",
+      "1. Lead-in : key vocabulary",
+      "2. Reading",
+      "3. Text comprehension",
+      "4. Puzzle games"
+    ],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
+  },
+  "2026-07-27|Wed-6-p1": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
+  },
+  "2026-07-27|Tue-8-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
+  },
+  "2026-07-27|Tue-9-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
+  },
+  "2026-07-27|Tue-6-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Selva",
+      "Philibert"
+    ]
+  },
+  "2026-07-27|Tue-7-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Selva",
+      "Philibert"
     ]
   }
 }
