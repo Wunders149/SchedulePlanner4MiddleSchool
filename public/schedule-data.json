@@ -1155,5 +1155,29 @@
       "Myria",
       "Philibert"
     ]
+  },
+  "2026-07-27|Thu-9-p1": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
+  },
+  "2026-07-27|Thu-8-p2": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Philibert",
+      "Myria"
+    ]
+  },
+  "2026-07-27|Thu-7-p2": {
+    "title": "English Class",
+    "description": [],
+    "teachers": [
+      "Narindra",
+      "Selva"
+    ]
   }
 }
