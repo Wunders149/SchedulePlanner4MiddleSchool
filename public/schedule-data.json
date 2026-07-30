@@ -1097,7 +1097,13 @@
   },
   "2026-07-27|Wed-8-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Listening: How reading shapes your brain",
+      "1. Icebreaker",
+      "2. Listening",
+      "3. Speech",
+      "4. Debate"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
@@ -1166,7 +1172,13 @@
   },
   "2026-07-27|Thu-8-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Reading: Life on Mars",
+      "1. Warm-up",
+      "2. Reading session",
+      "3. Reading comprehension",
+      "4. Debate"
+    ],
     "teachers": [
       "Philibert",
       "Myria"
