@@ -1030,7 +1030,12 @@
   },
   "2026-07-27|Wed-6-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: Healthy Lifestyle",
+      "1. Icebreaker / Group Work / Oral Practice",
+      "2. Lessons ( Vocabulary + Grammar )",
+      "3. Listening & Reading"
+    ],
     "teachers": [
       "Narindra",
       "Myria"
@@ -1096,6 +1101,59 @@
     "teachers": [
       "Narindra",
       "Selva"
+    ]
+  },
+  "2026-07-27|Thu-6-p1": {
+    "title": "English Class",
+    "description": [
+      "Topic : Science and amazing discoveries",
+      "1. Warm-up",
+      "2. Lessons ( vocabulary + grammar)",
+      "3. Exercise"
+    ],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
+  },
+  "2026-07-27|Wed-6-p3": {
+    "title": "English Activities",
+    "description": [
+      "Rehearsal"
+    ],
+    "teachers": [
+      "Selva",
+      "Narindra"
+    ]
+  },
+  "2026-07-27|Wed-7-p3": {
+    "title": "English Activities",
+    "description": [
+      "Rehearsal"
+    ],
+    "teachers": [
+      "Selva",
+      "Narindra"
+    ]
+  },
+  "2026-07-27|Wed-8-p3": {
+    "title": "English Activities",
+    "description": [
+      "Rehearsal"
+    ],
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
+  },
+  "2026-07-27|Wed-9-p3": {
+    "title": "English Activities",
+    "description": [
+      "Rehearsal"
+    ],
+    "teachers": [
+      "Myria",
+      "Philibert"
     ]
   }
 }
