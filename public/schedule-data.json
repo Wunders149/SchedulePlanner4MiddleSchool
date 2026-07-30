@@ -590,14 +590,7 @@
   },
   "2026-07-20|Mon-9-p1": {
     "title": "English Class",
-    "description": [
-      "Listening : What's going on in a footballer's brain?",
-      "1. Warm-up",
-      "2. Brainstorm",
-      "3. Listening",
-      "4. Vocabulary",
-      "5. Open Discussions"
-    ],
+    "description": [],
     "teachers": [
       "Philibert",
       "Selva"
@@ -605,13 +598,7 @@
   },
   "2026-07-20|Mon-6-p1": {
     "title": "English Class",
-    "description": [
-      "Topic: Travel and holiday",
-      "1. Warm-up: Personal Pronouns game",
-      "2. Lessons & Vocabulary & Grammar",
-      "3. Listening exercise & reading comprehension",
-      "4. Gamified English & Speaking sessions"
-    ],
+    "description": [],
     "teachers": [
       "Narindra",
       "Myria"
@@ -619,14 +606,7 @@
   },
   "2026-07-20|Mon-7-p2": {
     "title": "English Class",
-    "description": [
-      "Topic : Travels & Holidays",
-      "1. Warm-up : guess the destination",
-      "2. Lessons plan",
-      "3. Vocabulary brainstorm",
-      "4. Grammar : Future plans & sequencing words",
-      "5. Games : Snap & Claps, Unscramble Words, Discussion"
-    ],
+    "description": [],
     "teachers": [
       "Philibert",
       "Myria"
@@ -634,14 +614,7 @@
   },
   "2026-07-20|Mon-8-p2": {
     "title": "English Class",
-    "description": [
-      "Listening : What's in a Footballer's brain",
-      "1. Warm-up : How was the world cup",
-      "2. Listening session",
-      "3. Correction",
-      "4. Oral discussion related to the topic",
-      "5. Debate : Education"
-    ],
+    "description": [],
     "teachers": [
       "Narindra",
       "Selva"
@@ -1251,5 +1224,123 @@
     "title": "ASTRONOMY",
     "description": [],
     "teachers": []
+  },
+  "2026-07-20|Fri-6-p1": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-7-p1": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-8-p1": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-9-p1": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-6-p2": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-7-p2": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-8-p2": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-9-p2": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-6-p3": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-7-p3": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-8-p3": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-20|Fri-9-p3": {
+    "title": "NATIONAL REMEMBERANCE DAY",
+    "description": [
+      "No Class"
+    ],
+    "teachers": []
+  },
+  "2026-07-27|Thu-6-p3": {
+    "title": "English Activities",
+    "description": [
+      "Speech & Theater Preparation"
+    ],
+    "teachers": [
+      "Selva",
+      "Philibert"
+    ]
+  },
+  "2026-07-27|Thu-7-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Selva",
+      "Philibert"
+    ]
+  },
+  "2026-07-27|Thu-8-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Myria",
+      "Narindra"
+    ]
+  },
+  "2026-07-27|Thu-9-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Myria",
+      "Narindra"
+    ]
   }
 }
