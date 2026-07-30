@@ -981,7 +981,12 @@
   },
   "2026-07-27|Tue-7-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: My Life before 18 years old",
+      "1. Warm-up",
+      "2. Exercises: Writing & Listening",
+      "3. Reading sessions"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
@@ -1159,7 +1164,12 @@
   },
   "2026-07-27|Thu-7-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: Science and discoveries",
+      "1. Warm-up",
+      "2. Exercises : Writing, Speaking, Listening",
+      "3. Oral discussion"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
@@ -1321,7 +1331,9 @@
   },
   "2026-07-27|Thu-7-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Speech & Theater Preparation"
+    ],
     "teachers": [
       "Selva",
       "Philibert"
@@ -1329,7 +1341,9 @@
   },
   "2026-07-27|Thu-8-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Speech & Theater Preparation"
+    ],
     "teachers": [
       "Myria",
       "Narindra"
@@ -1337,7 +1351,9 @@
   },
   "2026-07-27|Thu-9-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Speech & Theater Preparation"
+    ],
     "teachers": [
       "Myria",
       "Narindra"
