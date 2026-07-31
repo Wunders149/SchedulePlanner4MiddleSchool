@@ -1164,7 +1164,12 @@
   },
   "2026-07-27|Thu-9-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Listening: Is it okay to disagree",
+      "1. Warm-up",
+      "2. Listening & comprehension",
+      "3. Gamified English"
+    ],
     "teachers": [
       "Narindra",
       "Myria"
@@ -1378,22 +1383,39 @@
   },
   "2026-07-27|Fri-9-p1": {
     "title": "English Class",
-    "description": [],
-    "teachers": []
+    "description": [
+      "Discussion: Saying goodbye and moving forward",
+      "1. Warm-up",
+      "2. Vocabulary",
+      "3. Discussion"
+    ],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
   },
   "2026-07-27|Fri-6-p1": {
     "title": "English Class",
     "description": [],
-    "teachers": []
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
   },
   "2026-07-27|Fri-7-p2": {
     "title": "English Class",
     "description": [],
-    "teachers": []
+    "teachers": [
+      "Philibert",
+      "Myria"
+    ]
   },
   "2026-07-27|Fri-8-p2": {
     "title": "English Class",
     "description": [],
-    "teachers": []
+    "teachers": [
+      "Narindra",
+      "Selva"
+    ]
   }
 }
