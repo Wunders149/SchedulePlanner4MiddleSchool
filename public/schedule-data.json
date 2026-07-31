@@ -1406,7 +1406,13 @@
   },
   "2026-07-27|Fri-6-p1": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: Goals, Dreams, Ambitions",
+      "1. Icebreaker",
+      "2. Reading & writing comprehension",
+      "3. Listening session",
+      "4. English review"
+    ],
     "teachers": [
       "Narindra",
       "Myria"
@@ -1427,7 +1433,11 @@
   },
   "2026-07-27|Fri-8-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "English Review",
+      "1. Icebreaker",
+      "2. Debate"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
