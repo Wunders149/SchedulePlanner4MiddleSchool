@@ -1008,7 +1008,12 @@
   },
   "2026-07-27|Tue-7-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: My life before 18 years",
+      "1. Warm-up",
+      "2. Oral Practice",
+      "3. Reading exercises"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
@@ -1191,7 +1196,12 @@
   },
   "2026-07-27|Thu-7-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: Science and discoveries",
+      "1. Warm-up",
+      "2. Exercise",
+      "3. Oral discussion"
+    ],
     "teachers": [
       "Narindra",
       "Selva"
@@ -1404,7 +1414,12 @@
   },
   "2026-07-27|Fri-7-p2": {
     "title": "English Class",
-    "description": [],
+    "description": [
+      "Topic: Dream, Goals & Ambitions",
+      "1. Warm-up",
+      "2. Vocabulary & Grammar",
+      "3. Oral practice"
+    ],
     "teachers": [
       "Philibert",
       "Myria"
