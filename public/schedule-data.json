@@ -1442,5 +1442,45 @@
       "Narindra",
       "Selva"
     ]
+  },
+  "2026-08-03|Mon-6-p1": {
+    "title": "English Test",
+    "description": [
+      "Speaking: Vocabulary & Grammar",
+      "Fluency & Intonation"
+    ],
+    "teachers": [
+      "Narindra"
+    ]
+  },
+  "2026-08-03|Mon-9-p1": {
+    "title": "English Test",
+    "description": [
+      "Speaking: Vocabulary & Grammar",
+      "Fluency & Intonation"
+    ],
+    "teachers": [
+      "Philibert"
+    ]
+  },
+  "2026-08-03|Mon-7-p2": {
+    "title": "English Test",
+    "description": [
+      "Speaking: Vocabulary & Grammar",
+      "Fluency & Intonation"
+    ],
+    "teachers": [
+      "Philibert"
+    ]
+  },
+  "2026-08-03|Mon-8-p2": {
+    "title": "English Test",
+    "description": [
+      "Speaking: Vocabulary & Grammar",
+      "Fluency & Intonation"
+    ],
+    "teachers": [
+      "Narindra"
+    ]
   }
 }
