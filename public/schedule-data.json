@@ -1514,5 +1514,57 @@
       "Selva",
       "Philibert"
     ]
+  },
+  "2026-08-03|Tue-6-p1": {
+    "title": "English Test",
+    "description": [
+      "Writing Test",
+      "Grammar & Vocabulary Check",
+      "Sentence building",
+      "Storytelling"
+    ],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
+  },
+  "2026-08-03|Tue-9-p1": {
+    "title": "English Test",
+    "description": [
+      "Writing Test",
+      "Grammar & Vocabulary Check",
+      "Sentence building",
+      "Storytelling"
+    ],
+    "teachers": [
+      "Narindra",
+      "Mirya"
+    ]
+  },
+  "2026-08-03|Tue-8-p2": {
+    "title": "English Test",
+    "description": [
+      "Writing Test",
+      "Grammar & Vocabulary Check",
+      "Sentence building",
+      "Storytelling"
+    ],
+    "teachers": [
+      "Philibert",
+      "Myria"
+    ]
+  },
+  "2026-08-03|Tue-7-p2": {
+    "title": "English Test",
+    "description": [
+      "Writing Test",
+      "Grammar & Vocabulary Check",
+      "Sentence building",
+      "Storytelling"
+    ],
+    "teachers": [
+      "Narindra",
+      "Selva"
+    ]
   }
 }
