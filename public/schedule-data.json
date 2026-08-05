@@ -1652,21 +1652,33 @@
   "2026-08-03|Wed-6-p3": {
     "title": "English Activities",
     "description": [],
-    "teachers": []
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
   },
   "2026-08-03|Wed-7-p3": {
     "title": "English Activities",
     "description": [],
-    "teachers": []
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
   },
   "2026-08-03|Wed-8-p3": {
     "title": "English Activities",
     "description": [],
-    "teachers": []
+    "teachers": [
+      "Selva",
+      "Narindra"
+    ]
   },
   "2026-08-03|Wed-9-p3": {
     "title": "English Activities",
     "description": [],
-    "teachers": []
+    "teachers": [
+      "Selva",
+      "Narindra"
+    ]
   }
 }
