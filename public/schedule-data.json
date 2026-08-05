@@ -1566,5 +1566,97 @@
       "Narindra",
       "Selva"
     ]
+  },
+  "2026-08-03|Wed-9-p1": {
+    "title": "English Test",
+    "description": [
+      "Listening : 6 Minute English worksheet Is breakfast the most important meal of the day?"
+    ],
+    "teachers": [
+      "Philibert",
+      "Selva"
+    ]
+  },
+  "2026-08-03|Wed-6-p1": {
+    "title": "English Test",
+    "description": [
+      "Reading: Oral"
+    ],
+    "teachers": [
+      "Narindra",
+      "Myria"
+    ]
+  },
+  "2026-08-03|Wed-7-p2": {
+    "title": "English Test",
+    "description": [
+      "Reading : Oral"
+    ],
+    "teachers": [
+      "Philibert",
+      "Myria"
+    ]
+  },
+  "2026-08-03|Wed-8-p2": {
+    "title": "English Test",
+    "description": [
+      "Listening : 6 Minute English worksheet Is breakfast the most important meal of the day?"
+    ],
+    "teachers": [
+      "Narindra",
+      "Selva"
+    ]
+  },
+  "2026-08-03|Tue-6-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Selva",
+      "Narindra"
+    ]
+  },
+  "2026-08-03|Tue-7-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Selva",
+      "Narindra"
+    ]
+  },
+  "2026-08-03|Tue-8-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
+  },
+  "2026-08-03|Tue-9-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": [
+      "Myria",
+      "Philibert"
+    ]
+  },
+  "2026-08-03|Wed-6-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": []
+  },
+  "2026-08-03|Wed-7-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": []
+  },
+  "2026-08-03|Wed-8-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": []
+  },
+  "2026-08-03|Wed-9-p3": {
+    "title": "English Activities",
+    "description": [],
+    "teachers": []
   }
 }
