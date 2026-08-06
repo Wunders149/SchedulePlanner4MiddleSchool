@@ -1515,7 +1515,11 @@
   },
   "2026-08-03|Mon-8-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Preparing English Show",
+      "1. Speech",
+      "2. Debate & Movie Role Play"
+    ],
     "teachers": [
       "Selva",
       "Philibert"
@@ -1523,7 +1527,11 @@
   },
   "2026-08-03|Mon-9-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Preparing English Show",
+      "1. Speech",
+      "2. Debate & Movie Role Play"
+    ],
     "teachers": [
       "Selva",
       "Philibert"
@@ -1655,7 +1663,11 @@
   },
   "2026-08-03|Tue-8-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Preparing English Show",
+      "1. Speech",
+      "2. Debate & Movie Role Play"
+    ],
     "teachers": [
       "Myria",
       "Philibert"
@@ -1663,7 +1675,11 @@
   },
   "2026-08-03|Tue-9-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Preparing English Show",
+      "1. Speech",
+      "2. Debate & Movie Role Play"
+    ],
     "teachers": [
       "Myria",
       "Philibert"
@@ -1697,7 +1713,11 @@
   },
   "2026-08-03|Wed-8-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Preparing English Show",
+      "1. Speech",
+      "2. Debate & Movie Role Play"
+    ],
     "teachers": [
       "Selva",
       "Narindra"
@@ -1705,7 +1725,11 @@
   },
   "2026-08-03|Wed-9-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "Preparing English Show",
+      "1. Speech",
+      "2. Debate & Movie Role Play"
+    ],
     "teachers": [
       "Selva",
       "Narindra"
@@ -1724,10 +1748,9 @@
   "2026-08-03|Thu-9-p1": {
     "title": "English Activities",
     "description": [
-      "General Repetition",
-      "1. Dance",
-      "2. Role Play",
-      "3. Storytelling"
+      "Preparing English Show",
+      "1. Speech",
+      "2. Debate & Movie Role Play"
     ],
     "teachers": []
   },
@@ -1744,10 +1767,9 @@
   "2026-08-03|Thu-8-p2": {
     "title": "English Activities",
     "description": [
-      "General Repetition",
-      "1. Dance",
-      "2. Role Play",
-      "3. Storytelling"
+      "Preparing English Show",
+      "1. Speech",
+      "2. Debate & Movie Role Play"
     ],
     "teachers": []
   },
@@ -1774,20 +1796,18 @@
   "2026-08-03|Thu-8-p3": {
     "title": "English Activities",
     "description": [
-      "General Repetition",
-      "1. Dance",
-      "2. Role Play",
-      "3. Storytelling"
+      "Preparing English Show",
+      "1. Speech",
+      "2. Debate & Movie Role Play"
     ],
     "teachers": []
   },
   "2026-08-03|Thu-9-p3": {
     "title": "English Activities",
     "description": [
-      "General Repetition",
-      "1. Dance",
-      "2. Role Play",
-      "3. Storytelling"
+      "Preparing English Show",
+      "1. Speech",
+      "2. Debate & Movie Role Play"
     ],
     "teachers": []
   }
