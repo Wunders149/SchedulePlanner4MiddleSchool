@@ -1489,7 +1489,12 @@
   },
   "2026-08-03|Mon-6-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
     "teachers": [
       "Myria",
       "Narindra"
@@ -1497,7 +1502,12 @@
   },
   "2026-08-03|Mon-7-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
     "teachers": [
       "Myria",
       "Narindra"
@@ -1619,7 +1629,12 @@
   },
   "2026-08-03|Tue-6-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
     "teachers": [
       "Selva",
       "Narindra"
@@ -1627,7 +1642,12 @@
   },
   "2026-08-03|Tue-7-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
     "teachers": [
       "Selva",
       "Narindra"
@@ -1651,7 +1671,12 @@
   },
   "2026-08-03|Wed-6-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
     "teachers": [
       "Myria",
       "Philibert"
@@ -1659,7 +1684,12 @@
   },
   "2026-08-03|Wed-7-p3": {
     "title": "English Activities",
-    "description": [],
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
     "teachers": [
       "Myria",
       "Philibert"
@@ -1680,5 +1710,85 @@
       "Selva",
       "Narindra"
     ]
+  },
+  "2026-08-03|Thu-6-p1": {
+    "title": "English Activities",
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
+    "teachers": []
+  },
+  "2026-08-03|Thu-9-p1": {
+    "title": "English Activities",
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
+    "teachers": []
+  },
+  "2026-08-03|Thu-7-p2": {
+    "title": "English Activities",
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
+    "teachers": []
+  },
+  "2026-08-03|Thu-8-p2": {
+    "title": "English Activities",
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
+    "teachers": []
+  },
+  "2026-08-03|Thu-6-p3": {
+    "title": "English Activities",
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
+    "teachers": []
+  },
+  "2026-08-03|Thu-7-p3": {
+    "title": "English Activities",
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
+    "teachers": []
+  },
+  "2026-08-03|Thu-8-p3": {
+    "title": "English Activities",
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
+    "teachers": []
+  },
+  "2026-08-03|Thu-9-p3": {
+    "title": "English Activities",
+    "description": [
+      "General Repetition",
+      "1. Dance",
+      "2. Role Play",
+      "3. Storytelling"
+    ],
+    "teachers": []
   }
 }
